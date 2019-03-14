@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-airbnb"
+  ],
+  "rules": {
+    "import-name": false,
+    "variable-name": false
+  }
+}
