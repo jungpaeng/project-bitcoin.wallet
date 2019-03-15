@@ -4,12 +4,10 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const jsBitcoin = require('../js.bitcoin/src/server');
 
-let PORT = '';
-
 getPort().then(port => {
   const server = jsBitcoin.app.listen(port);
-  PORT=port;
   jsBitcoin.startP2PServer(server);
+  global.sharedPort = port;
 })
 
 const path = require('path');
@@ -22,7 +20,7 @@ function createWindow() {
     width: 800,
     height: 600,
     resizable: false,
-    title: `js.bitcoin Wallet at PORT: ${PORT}`
+    title: `js.bitcoin Wallet at PORT: ${global.sharedPort}`
   });
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
