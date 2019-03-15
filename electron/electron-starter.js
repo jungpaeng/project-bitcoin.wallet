@@ -1,6 +1,11 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const jsBitcoin = require('../js.bitcoin/src/server');
+
+const server = jsBitcoin.app.listen(4000);
+
+jsBitcoin.startP2PServer(server);
 
 const path = require('path');
 const url = require('url');

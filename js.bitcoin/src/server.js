@@ -151,11 +151,11 @@ app.post('/mineTransaction', (req, res) => {
   }
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`Coin Server running on port: ${PORT}`);
-});
-
 initWallet();
-startP2PServer(server);
 
 process.on('unhandledRejection', err => console.error('unhandled', err));
+
+module.exports = {
+  startP2PServer,
+  app,
+};
