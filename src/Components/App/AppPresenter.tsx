@@ -79,14 +79,22 @@ const Card = styled.div`
 export interface IAppData {
   address: string;
   balance: number;
+  isMining: boolean;
 }
 
-const AppPresenter: FC<IAppData> = ({ address, balance }) => (
+interface IProps extends IAppData {
+  mineBlock: () => void;
+}
+
+const AppPresenter: FC<IProps> = ({ address, balance, isMining, mineBlock }) => (
   <AppContainer>
     <Header>
       <h1>js.bitcoin</h1>
-      <Button>
-        Mine
+      <Button
+        onClick={mineBlock}
+        disabled={isMining}
+      >
+        {isMining ? 'isMining' : 'Mine'}
       </Button>
     </Header>
     <Card>

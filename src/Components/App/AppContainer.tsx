@@ -24,6 +24,7 @@ class AppContainer extends Component<IProps, IState> {
   public state: IState = {
     address: '',
     balance: 0,
+    isMining: false,
   };
 
   public componentDidMount() {
@@ -35,7 +36,7 @@ class AppContainer extends Component<IProps, IState> {
   }
 
   public connectOnMaster = async (port: string) => {
-    const request = await axios.post(`${MASTER_NODE}/peers`, {
+    await axios.post(`${MASTER_NODE}/peers`, {
       peer: SELF_P2P_NODE(port),
     });
   }
@@ -52,11 +53,21 @@ class AppContainer extends Component<IProps, IState> {
     this.setState({ balance });
   }
 
+  public mineBlock = async () => {
+    const { sharedPort } = this.props;
+    this.setState({ isMining: true });
+    await axios.post(`${SELF_NODE(sharedPort)}/mine`);
+    this.setState({ isMining: false });
+  }
+
   public render() {
     return (
       <>
         <GlobalStyle />
-        <AppPresenter {...this.state} />
+        <AppPresenter
+          {...this.state}
+          mineBlock={this.mineBlock}
+        />
       </>
     );
   }
