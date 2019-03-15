@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "get-port": "^4.2.0",
     "prettier-tslint": "^0.4.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
