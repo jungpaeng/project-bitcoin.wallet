@@ -38,6 +38,7 @@
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.2",
     "electron": "^4.1.0",
+    "foreman": "^3.0.1",
     "tslint-config-airbnb": "^5.11.1"
   }
 }
