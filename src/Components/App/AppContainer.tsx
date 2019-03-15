@@ -4,21 +4,21 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { MASTER_NODE, SELF_NODE, SELF_P2P_NODE } from '../../Constants/server';
 import typography from '../../typography';
-import AppPresenter from './AppPresenter';
+import AppPresenter, { IAppData } from './AppPresenter';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
   ${typography};
+  h1, h2, h3, h4 {
+    margin-bottom: 0 !important;
+  }
 `;
 
 interface IProps {
   sharedPort: string;
 }
 
-interface IState {
-  address: string;
-  balance: number;
-}
+type IState = IAppData;
 
 class AppContainer extends Component<IProps, IState> {
   public state: IState = {
@@ -56,7 +56,7 @@ class AppContainer extends Component<IProps, IState> {
     return (
       <>
         <GlobalStyle />
-        <AppPresenter />
+        <AppPresenter {...this.state} />
       </>
     );
   }
