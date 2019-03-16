@@ -74,6 +74,49 @@ const Card = styled.div`
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+
+  & + & {
+    margin-top: 30px;
+  }
+`;
+
+const SendTxForm = styled.form`
+  display: flex;
+  margin: 0;
+  padding-top: 20px;
+
+  * + * {
+    margin-left: 10px;
+  }
+`;
+
+const Submit = styled(Button)`
+  border: 2px solid #bbb;
+  box-shadow: none;
+
+  &:hover{
+      box-shadow:none;
+      transform:none;
+  }
+
+  &:disabled{
+    color:#999;
+    border: 2px solid #999;
+    cursor:not-allowed;
+    box-shadow:none;
+  }
+`;
+
+const Input = styled(Submit)`
+  width: 200px;
+  padding-left: 10px;
+  color: ${props => ((props as any).hasError && 'tomato')};
+  border-color: ${props => ((props as any).hasError && 'tomato')};
+  cursor: text;
+
+  &:active {
+    background: transparent;
+  }
 `;
 
 export interface IAppData {
@@ -102,6 +145,24 @@ const AppPresenter: FC<IProps> = ({ address, balance, isMining, mineBlock }) => 
       <Text>{address}</Text>
       <h2>Balance</h2>
       <Text>{balance}</Text>
+    </Card>
+    <Card>
+      <h2>Send Balance</h2>
+      <SendTxForm>
+        <Input
+          as="input"
+          placeholder="Address"
+        />
+        <Input
+          as="input"
+          placeholder="Amount"
+        />
+        <Submit
+          as="input"
+          type="submit"
+          value="Send"
+        />
+      </SendTxForm>
     </Card>
   </AppContainer>
 );
