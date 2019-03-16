@@ -123,13 +123,19 @@ export interface IAppData {
   address: string;
   balance: number;
   isMining: boolean;
+  toAddress: string;
+  amount: string;
 }
 
 interface IProps extends IAppData {
   mineBlock: () => void;
+  handleInput: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+  handleSubmit: (e: any) => void;
 }
 
-const AppPresenter: FC<IProps> = ({ address, balance, isMining, mineBlock }) => (
+const AppPresenter: FC<IProps> = ({
+  address, amount, balance, handleInput, handleSubmit, isMining, mineBlock, toAddress,
+}) => (
   <AppContainer>
     <Header>
       <h1>js.bitcoin</h1>
@@ -148,19 +154,28 @@ const AppPresenter: FC<IProps> = ({ address, balance, isMining, mineBlock }) => 
     </Card>
     <Card>
       <h2>Send Balance</h2>
-      <SendTxForm>
+      <SendTxForm onSubmit={handleSubmit}>
         <Input
           as="input"
+          type="text"
           placeholder="Address"
+          name="toAddress"
+          value={toAddress}
+          onChange={handleInput}
         />
         <Input
           as="input"
+          type="number"
           placeholder="Amount"
+          name="amount"
+          value={amount}
+          onChange={handleInput}
         />
         <Submit
           as="input"
           type="submit"
           value="Send"
+          disabled={!toAddress || !amount || (Number(amount) > Number(balance))}
         />
       </SendTxForm>
     </Card>

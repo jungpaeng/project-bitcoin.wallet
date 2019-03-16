@@ -23,8 +23,10 @@ type IState = IAppData;
 class AppContainer extends Component<IProps, IState> {
   public state: IState = {
     address: '',
+    amount: '',
     balance: 0,
     isMining: false,
+    toAddress: '',
   };
 
   public componentDidMount() {
@@ -60,6 +62,28 @@ class AppContainer extends Component<IProps, IState> {
     this.setState({ isMining: false });
   }
 
+  public handleInput = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    const { target: { name, value } } = e;
+
+    this.setState({
+      [name as any]: value,
+    } as Pick<IState, keyof IState>);
+  }
+
+  public handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const { sharedPort } = this.props;
+    const { amount, toAddress } = this.state;
+    await axios.post(`${SELF_NODE(sharedPort)}/transactions`, {
+      address: toAddress,
+      amount: Number(amount ? amount : '0'),
+    });
+    this.setState({
+      amount: '',
+      toAddress: '',
+    });
+  }
+
   public render() {
     return (
       <>
@@ -67,6 +91,8 @@ class AppContainer extends Component<IProps, IState> {
         <AppPresenter
           {...this.state}
           mineBlock={this.mineBlock}
+          handleInput={this.handleInput}
+          handleSubmit={this.handleSubmit}
         />
       </>
     );
