@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import { MASTER_NODE, SELF_NODE, SELF_P2P_NODE } from '../../Constants/server';
+import { MASTER_P2P_NODE, SELF_NODE } from '../../Constants/server';
 import typography from '../../typography';
 import AppPresenter, { IAppData } from './AppPresenter';
 
@@ -36,8 +36,8 @@ class AppContainer extends Component<IProps, IState> {
   }
 
   public connectOnMaster = async (port: string) => {
-    await axios.post(`${MASTER_NODE}/peers`, {
-      peer: SELF_P2P_NODE(port),
+    await axios.post(`${SELF_NODE(port)}/peers`, {
+      peer: MASTER_P2P_NODE,
     });
   }
 
